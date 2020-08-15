@@ -14,7 +14,7 @@ bot = commands.Bot(command_prefix=PREFIX)
 @bot.command(name=COMMAND_NAME)
 async def run(ctx):
     content = ctx.message.content.lstrip(PREFIX + COMMAND_NAME)
-    # requests.post("127.0.0.1:8000", data=content)
-    await ctx.send(content)
+    r = requests.post("http://localhost:8000", json={"content": content})
+    await ctx.send(r.text)
 
 bot.run(TOKEN)
