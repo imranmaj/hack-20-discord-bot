@@ -2,13 +2,13 @@ import os
 
 from discord.ext import commands
 import requests
-# from dotenv import load_dotenv
 
-# load_dotenv()
+
 TOKEN = os.getenv('DISCORD_TOKEN')
 PREFIX = "!"
 COMMAND_NAME = "run"
 BOUNDS = "```"
+
 bot = commands.Bot(command_prefix=PREFIX)
 
 @bot.command(name=COMMAND_NAME)
@@ -28,4 +28,5 @@ async def run(ctx):
     
     await ctx.send(r.text)
 
-bot.run(TOKEN)
+if __name__ == "__main__":
+    bot.run(TOKEN)
