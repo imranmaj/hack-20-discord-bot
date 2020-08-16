@@ -8,11 +8,11 @@ from ..utils.timer import Timer
 def run_python(content):
     if("import" not in content):
         with open("python_runner.py", "w+") as output:
-            output.write("import numpy")
-            output.write("import time")
-            output.write("import datetime")
-            output.write("import math")
-            output.write("import random")
+            output.write("import numpy\n")
+            output.write("import time\n")
+            output.write("import datetime\n")
+            output.write("import math\n")
+            output.write("import random\n")
             output.write(content)
 
         try:
