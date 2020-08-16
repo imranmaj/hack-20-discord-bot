@@ -13,6 +13,7 @@ from timer import Timer
 TOKEN = os.getenv("DISCORD_TOKEN")
 PREFIX = "!"
 COMMAND_NAME = "run"
+COMMAND_HELP = "type code in the format \`\`\`{language} // code\`\`\`"
 BOUNDS = "```"
 LANGUAGE_ENDPOINTS = {
     "python": "",
@@ -22,7 +23,7 @@ LANGUAGE_ENDPOINTS = {
 bot = commands.Bot(command_prefix=PREFIX)
 
 
-@bot.command(name=COMMAND_NAME)
+@bot.command(name=COMMAND_NAME, help=COMMAND_HELP)
 async def run(ctx):
     # remove !run
     content = ctx.message.content.lstrip(PREFIX + COMMAND_NAME)
@@ -56,12 +57,15 @@ async def run(content, function, ctx):
     with t:
         result = function(content)
     duration = t.duration
-    result += '\n' + str(duration)
-    for i in range(len(result) // 1900 + 1):
-        end = (i + 1) * 1900
-        if end > len(result):
-            end = len(result)
-        await ctx.send(result[i * 1900:end])
+    result += '\nExecution Time: ' + str(duration) + ' secs\n'
+    author = ctx.author.mention
+    ends = [0]
+    while ends[-1] < len(result):
+        ends.append(result.rindex('\n', 0, ends[-1] + 1900) + 1)
+    
+    num_messages = len(ends) - 1
+    for i in range(num_messages):
+        await ctx.send(f'{author} ({i + 1}/{num_messages}):\n' + result[ends[i]:ends[i + 1]])
     
 if __name__ == "__main__":
     bot.run(TOKEN)
