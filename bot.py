@@ -8,6 +8,7 @@ from discord.ext import commands
 
 from timeout import timeout
 from run_python import run_python
+from timer import Timer
 
 TOKEN = os.getenv("DISCORD_TOKEN")
 PREFIX = "!"
@@ -44,7 +45,11 @@ async def run(ctx):
         return
 
     if language.lower() == "python":
-        await ctx.send(run_python(content))
+        t = Timer()
+        with t:
+            result = run_python(content)
+        await ctx.send(result)
+        await ctx.send(t.duration)
     else:
         await ctx.send(content)
 
