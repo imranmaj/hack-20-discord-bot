@@ -1,16 +1,8 @@
-import os
-import traceback
-import sys
-from io import StringIO
-
 from discord.ext import commands
 
-from timeout import timeout
-from run_python import run_python
-from run_java import run_java
-from timer import Timer
+from .python_runner.run_python import run_python
+from .java_runner.run_java import run_java
 
-TOKEN = os.getenv("DISCORD_TOKEN")
 PREFIX = "!"
 COMMAND_NAME = "run"
 COMMAND_HELP = """runs code
@@ -66,6 +58,3 @@ async def run(content, function, ctx):
     num_messages = len(ends) - 1
     for i in range(num_messages):
         await ctx.send(f'{author} ({i + 1}/{num_messages}):\n```\n{result[ends[i]:ends[i + 1]]}```')
-    
-if __name__ == "__main__":
-    bot.run(TOKEN)

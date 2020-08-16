@@ -1,8 +1,8 @@
 import os, traceback, sys
 import subprocess
-from timer import Timer
+from ..utils.timer import Timer
 
-from timeout import timeout, TimeoutError
+from ..utils.timeout import timeout, TimeoutError
 from io import StringIO
 
 @timeout(15)

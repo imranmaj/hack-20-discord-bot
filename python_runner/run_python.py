@@ -1,8 +1,8 @@
 import os, traceback, sys, subprocess
 
-from timeout import timeout, TimeoutError
+from ..utils.timeout import timeout, TimeoutError
 from io import StringIO
-from timer import Timer
+from ..utils.timer import Timer
 
 @timeout(15)
 def run_python(content):
