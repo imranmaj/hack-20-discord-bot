@@ -5,8 +5,11 @@
 Hack 20 Bot is a Discord bot that takes code and a specified language as input and outputs the result. Format your command in the form:
 
 !run
+
 \`\`\`<language (case insensitive)>
+
 \<code here\>
+
 \`\`\`
 
 Supported languages:
