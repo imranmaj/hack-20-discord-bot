@@ -59,14 +59,13 @@ async def run(ctx):
             exec(content)
         except SyntaxError as err:
             error_class = err.__class__.__name__
-            detail = err.args[0]
+            # detail = err.args[0]
             line_number = err.lineno
             await ctx.send(f"{error_class} at line {line_number}")
         except Exception as err:
             error_class = err.__class__.__name__
-            # detail = err.args[0]
-            # cl, exc, tb = sys.exc_info()
-            # line_number = traceback.extract_tb(tb)[-1][1]
+            cl, exc, tb = sys.exc_info()
+            line_number = traceback.extract_tb(tb)[-1][1]
             await ctx.send(f"{error_class} at line {line_number}")
         else:
             await ctx.send(output.getvalue())
