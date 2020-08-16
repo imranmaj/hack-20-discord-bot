@@ -45,18 +45,15 @@ async def run(ctx):
 
     if language.lower() == "python":
         t = Timer()
-        result = ''
         with t:
-            output = run_python(content)
-            if not output:
-                result += 'no output'
-            result += output
+            result = run_python(content)
+        duration = t.duration
+        result += '\n' + str(duration)
         for i in range(len(result) // 1900 + 1):
             end = (i + 1) * 1900
             if end > len(result):
                 end = len(result)
             await ctx.send(result[i * 1900:end])
-        await ctx.send(t.duration)
     else:
         await ctx.send(content)
 
