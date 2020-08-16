@@ -9,9 +9,9 @@ COMMAND_HELP = """runs code
                     format message: ``\u200B`\u200B{language} code\u200B`\u200B``
                     current languages: python, java"""
 BOUNDS = "```"
-LANGUAGE_ENDPOINTS = {
-    "python": "",
-    "java": ""
+LANGUAGE_FUNCTIONS = {
+    "python": run_python,
+    "java": run_java
 }
 
 bot = commands.Bot(command_prefix=PREFIX)
@@ -32,19 +32,15 @@ async def run(ctx):
         if i == "\n":
             break
         language += i
-    content = content[len(language) + 1 :]
+    content = content[len(language) + 1:]
 
     # check if endpoint exists
-    if language.lower() not in LANGUAGE_ENDPOINTS:
+    if language.lower() not in LANGUAGE_FUNCTIONS:
         await ctx.send("error: invalid language")
         return
-
-    if language.lower() == "python":
-        await run(content, run_python, ctx)
-    elif language.lower() == "java":
-        await run(content, run_java, ctx)
     else:
-        await ctx.send(language)
+        await run(content, LANGUAGE_FUNCTIONS[language.lower()], ctx)
+
 
 async def run(content, function, ctx):
     result = function(content)+"\n"
@@ -52,9 +48,10 @@ async def run(content, function, ctx):
     ends = [0]
     while ends[-1] < len(result):
         end = result.rfind('\n', ends[-1], ends[-1] + 1900) + 1
-        if end == 0: end = ends[-1] + 1900
+        if end == 0:
+            end = ends[-1] + 1900
         ends.append(end)
-    
+
     num_messages = len(ends) - 1
     for i in range(num_messages):
         await ctx.send(f'{author} ({i + 1}/{num_messages}):\n```\n{result[ends[i]:ends[i + 1]]}```')
