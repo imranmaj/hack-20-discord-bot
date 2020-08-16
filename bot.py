@@ -7,6 +7,7 @@ from discord.ext import commands
 
 from timeout import timeout
 from run_python import run_python
+from run_java import run_java
 from timer import Timer
 
 TOKEN = os.getenv("DISCORD_TOKEN")
@@ -44,18 +45,23 @@ async def run(ctx):
         return
 
     if language.lower() == "python":
-        t = Timer()
-        with t:
-            result = run_python(content)
-        duration = t.duration
-        result += '\n' + str(duration)
-        for i in range(len(result) // 1900 + 1):
-            end = (i + 1) * 1900
-            if end > len(result):
-                end = len(result)
-            await ctx.send(result[i * 1900:end])
+        await run(content, run_python, ctx)
+    elif language.lower() == "java":
+        await run(content, run_java, ctx)
     else:
-        await ctx.send(content)
+        await ctx.send(language)
 
+async def run(content, function, ctx):
+    t = Timer()
+    with t:
+        result = function(content)
+    duration = t.duration
+    result += '\n' + str(duration)
+    for i in range(len(result) // 1900 + 1):
+        end = (i + 1) * 1900
+        if end > len(result):
+            end = len(result)
+        await ctx.send(result[i * 1900:end])
+    
 if __name__ == "__main__":
     bot.run(TOKEN)

@@ -4,6 +4,7 @@ import subprocess
 from timeout import timeout
 from io import StringIO
 
+@timeout(15)
 def run_java(content):
     output = open("JavaRunner.java", "w+")
 
@@ -14,7 +15,10 @@ def run_java(content):
 
     output.close()
 
-    return runCode()
+    try:
+        return runCode()
+    except Exception as err:
+        return "Time Limit Exceeded"
 
 
 def runCode():

@@ -1,6 +1,6 @@
 import os, traceback, sys
 
-from timeout import timeout
+from timeout import timeout, TimeoutError
 from io import StringIO
 
 @timeout(15)
@@ -18,7 +18,7 @@ def run_python(content):
         line_number = err.lineno
         return f"{error_class} at line {line_number}"
     except TimeoutError as err:
-        return "Time limit reached"
+        return "Time Limit Exceeded"
     except Exception as err:
         error_class = err.__class__.__name__
         cl, exc, tb = sys.exc_info()

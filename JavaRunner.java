@@ -1,1 +1,5 @@
-public class JavaRunner{public static void main(String[] args){System.out.println("Hello);}}
+public class JavaRunner{public static void main(String[] args){
+  while(true){
+  }
+}
+}
