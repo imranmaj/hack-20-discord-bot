@@ -43,21 +43,27 @@ async def run(ctx):
 async def run(content, function, ctx):
     result = function(content) + "\n"
 
-    counter = 0
+    counter_new_line = 0
+    counter_chars = 0
     limitedOutput = ""
-    for i in result:
-        if counter == 30:
-            counter+=1
+    timeidx = result.rfind("Execution Time")
+    for i in result[:timeidx]:
+        if counter_new_line == 30:
+            counter_new_line+=1
             if i != "":
-                limitedOutput+="Max Number of Lines:30\n#Truncated output#\n"
-            break;
+                limitedOutput+="Max Number of Lines Reached\n#Truncated output#\n"
+            break
+        if counter_chars == 1000:
+            counter_chars+=1
+            if i != "":
+                limitedOutput+="\nMax Number of Characters Reached\n#Truncated output#\n"
+            break
         if(i == "\n"):
-            counter+=1
+            counter_new_line+=1
         limitedOutput+=i
+        counter_chars+=1
             
-    if(counter == 31):
-        timeidx = result.rfind("Execution Time")
-        limitedOutput += result[timeidx:]
+    limitedOutput += result[timeidx:]
 
     author = ctx.author.mention
     await ctx.send(f"{author}\n```\n{limitedOutput}```")
