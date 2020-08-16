@@ -24,6 +24,5 @@ def run_python(content):
         cl, exc, tb = sys.exc_info()
         line_number = traceback.extract_tb(tb)[-1][1]
         return f"{error_class} at line {line_number}"
-    else:
-        return output.getvalue()
+    return output.getvalue()
 
