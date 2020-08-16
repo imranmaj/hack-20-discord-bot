@@ -42,16 +42,22 @@ async def run(ctx):
 
 async def run(content, function, ctx):
     result = function(content) + "\n"
-    author = ctx.author.mention
-    ends = [0]
-    while ends[-1] < len(result):
-        end = result.rfind("\n", ends[-1], ends[-1] + 1900) + 1
-        if end == 0:
-            end = ends[-1] + 1900
-        ends.append(end)
 
-    num_messages = len(ends) - 1
-    for i in range(num_messages):
-        await ctx.send(
-            f"{author} ({i + 1}/{num_messages}):\n```\n{result[ends[i]:ends[i + 1]]}```"
-        )
+    counter = 0
+    limitedOutput = ""
+    for i in result:
+        if counter == 30:
+            counter+=1
+            if i != "":
+                limitedOutput+="Max Number of Lines:30\n#Truncated output#\n"
+            break;
+        if(i == "\n"):
+            counter+=1
+        limitedOutput+=i
+            
+    if(counter == 31):
+        timeidx = result.rfind("Execution Time")
+        limitedOutput += result[timeidx:]
+
+    author = ctx.author.mention
+    await ctx.send(f"{author}\n```\n{limitedOutput}```")
