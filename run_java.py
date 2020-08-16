@@ -18,18 +18,14 @@ def run_java(content):
 
 
 def runCode():
-    output = StringIO()
-
-    sys.stdout = output
-    sys.stderr = output
-
     #Run the file
-    result = subprocess.run(['java JavaRunner.java'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    result = subprocess.Popen(['java', 'JavaRunner.java'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
-    # if(result.stdout.decode('utf-8') != ""):
-    return result.stdout.decode('utf-8')
-    # else:
-        # return result.stderr
+    stdout,stderr = result.communicate()
+    if(stderr == None):
+        return stdout.decode("utf-8")
+    else:
+        return stderr.decode("utf-8")
 
 def createHeader(output):
     output.write("public class JavaRunner{")

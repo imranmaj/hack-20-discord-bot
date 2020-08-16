@@ -1,5 +1,3 @@
-
-
 from run_java import run_java
 
 
