@@ -132,5 +132,5 @@ dmypy.json
 #Ignore runner files and lukes stuff
 .vim/
 test_run_java.py
-*.java
+JavaRunner.java
 python_runner.py
