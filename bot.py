@@ -1,9 +1,11 @@
 import os
+import traceback
+import sys
+from io import StringIO
 
 from discord.ext import commands
-import requests
-from io import StringIO
-import sys
+# import requests
+
 
 TOKEN = os.getenv("DISCORD_TOKEN")
 PREFIX = "!"
@@ -54,7 +56,7 @@ async def run(ctx):
         try: 
             exec(content)
         except Exception as e:
-            print traceback.format_exc()
+            print(traceback.format_exc())
         await ctx.send(output.getvalue())
     else:
         await ctx.send(content)
