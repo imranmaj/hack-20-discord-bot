@@ -2,14 +2,15 @@ import os
 
 from discord.ext import commands
 import requests
-
+from io import StringIO
+import sys
 
 TOKEN = os.getenv("DISCORD_TOKEN")
 PREFIX = "!"
 COMMAND_NAME = "run"
 BOUNDS = "```"
 LANGUAGE_ENDPOINTS = {
-    # "python": "",
+    "python": "",
     "java": ""
 }
 
@@ -45,7 +46,13 @@ async def run(ctx):
 
     # send eval output to discord
     # await ctx.send(r.text)
-    await ctx.send(content)
+    if language.lower() == "python":
+        output = StringIO()
+        sys.stdout = output
+        exec(content)
+        await ctx.send(output.getvalue())
+    else:
+        await ctx.send(content)
 
 
 if __name__ == "__main__":
