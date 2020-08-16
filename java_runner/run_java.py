@@ -39,6 +39,7 @@ def runCode():
 
 
 def createHeader(output):
+    output.write("import java.util.*;")
     output.write("public class JavaRunner{")
 
 

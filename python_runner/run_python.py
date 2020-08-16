@@ -6,23 +6,31 @@ from ..utils.timer import Timer
 
 @timeout(15)
 def run_python(content):
-    with open("python_runner.py", "w+") as output:
-        output.write(content)
+    if("import" not in content):
+        with open("python_runner.py", "w+") as output:
+            output.write("import numpy")
+            output.write("import time")
+            output.write("import datetime")
+            output.write("import math")
+            output.write("import random")
+            output.write(content)
 
-    try:
-        return runCode()
-    except SyntaxError as err:
-        error_class = err.__class__.__name__
-        # detail = err.args[0]
-        line_number = err.lineno
-        return f"{error_class} at line {line_number}"
-    except TimeoutError as err:
-        return "Time Limit Exceeded"
-    except Exception as err:
-        error_class = err.__class__.__name__
-        cl, exc, tb = sys.exc_info()
-        line_number = traceback.extract_tb(tb)[-1][1]
-        return f"{error_class} at line {line_number}"
+        try:
+            return runCode()
+        except SyntaxError as err:
+            error_class = err.__class__.__name__
+            # detail = err.args[0]
+            line_number = err.lineno
+            return f"{error_class} at line {line_number}"
+        except TimeoutError as err:
+            return "Time Limit Exceeded"
+        except Exception as err:
+            error_class = err.__class__.__name__
+            cl, exc, tb = sys.exc_info()
+            line_number = traceback.extract_tb(tb)[-1][1]
+            return f"{error_class} at line {line_number}"
+    else:
+        return "Importing is not allowed right now."
 
 
 def runCode():
