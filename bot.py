@@ -9,6 +9,8 @@ from io import StringIO
 import sys, traceback
 
 
+from timeout import timeout
+
 TOKEN = os.getenv("DISCORD_TOKEN")
 PREFIX = "!"
 COMMAND_NAME = "run"
@@ -48,6 +50,7 @@ async def run(ctx):
     else:
         await ctx.send(content)
 
+@timeout(15)
 def runPython(content):
     output = StringIO()
     
@@ -68,8 +71,6 @@ def runPython(content):
         return f"{error_class} at line {line_number}"
     else:
         return output.getvalue()
-
-
 
 if __name__ == "__main__":
     bot.run(TOKEN)
