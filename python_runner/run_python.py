@@ -1,8 +1,8 @@
-import os, traceback, sys, subprocess
+import traceback, sys, subprocess
 
 from ..utils.timeout import timeout, TimeoutError
-from io import StringIO
 from ..utils.timer import Timer
+
 
 @timeout(15)
 def run_python(content):
@@ -28,12 +28,16 @@ def run_python(content):
 def runCode():
     t = Timer()
     with t:
-        result = subprocess.Popen(['python3', 'python_runner.py'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        result = subprocess.Popen(
+            ["python3", "python_runner.py"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+        )
         result.wait()
     duration = t.duration
 
-    stdout,stderr = result.communicate()
-    if(stderr == None):
+    stdout, stderr = result.communicate()
+    if stderr == None:
         std_out = stdout.decode("utf-8")
         return f"{std_out}Execution Time: {duration}s"
     else:
