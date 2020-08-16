@@ -12,4 +12,5 @@ def run_python(content):
     file = open("JavaSkeleton.java", "a")
     file.write(content)
     # run the java somehow?!?!?
-    file.close()
+
+    return file.read()
