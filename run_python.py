@@ -28,7 +28,7 @@ def run_python(content):
 def runCode():
     t = Timer()
     with t:
-        result = subprocess.Popen(['python3.8', 'python_runner.py'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        result = subprocess.Popen(['python3', 'python_runner.py'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         result.wait()
     duration = t.duration
 
