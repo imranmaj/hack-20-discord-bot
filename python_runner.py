@@ -1,1 +1,3 @@
-print("hello")
+def f():
+  f()
+f()

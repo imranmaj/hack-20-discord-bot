@@ -127,5 +127,10 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
+#Ignore runner files and lukes stuff
 .vim/
 test_run_java.py
+*.java
+python_runner.py
