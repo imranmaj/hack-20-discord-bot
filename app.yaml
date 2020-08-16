@@ -1,4 +1,4 @@
-runtime: python
+runtime: python38
 entrypoint: python bot.py
 
 runtime_config:
