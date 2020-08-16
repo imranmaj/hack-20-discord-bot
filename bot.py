@@ -55,7 +55,7 @@ async def run(ctx):
         await ctx.send(language)
 
 async def run(content, function, ctx):
-    result = function(content)
+    result = function(content)+"\n"
     author = ctx.author.mention
     ends = [0]
     while ends[-1] < len(result):
