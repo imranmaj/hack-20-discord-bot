@@ -1,12 +1,11 @@
 runtime: python
-env: flex
 entrypoint: python bot.py
 
 runtime_config:
   python_version: 3
 
 env_variables:
-  DISCORD_TOKEN: NzQ0Mjg4NTg3MzY0Njk2MTg0.XzhCww.TmtakjVjBaTYIU0OCs7BXBaLL1E
+  DISCORD_TOKEN: NzQ0Mjg4NTg3MzY0Njk2MTg0.XzhCww.on_U1gw_L90EX8pwERIR5qYVex8
 
 # This sample incurs costs to run on the App Engine flexible environment. 
 # The settings below are to reduce costs during testing and are not appropriate
