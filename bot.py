@@ -48,7 +48,10 @@ async def run(ctx):
     # await ctx.send(r.text)
     if language.lower() == "python":
         output = StringIO()
+        
         sys.stdout = output
+        sys.stderr = output
+        
         exec(content)
         await ctx.send(output.getvalue())
     else:
