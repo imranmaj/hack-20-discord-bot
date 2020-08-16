@@ -3,7 +3,7 @@ import os
 from discord.ext import commands
 import requests
 from io import StringIO
-import sys
+import sys, traceback
 
 TOKEN = os.getenv("DISCORD_TOKEN")
 PREFIX = "!"
@@ -53,9 +53,20 @@ async def run(ctx):
         sys.stderr = output
         try: 
             exec(content)
-        except Exception as e:
-            print traceback.format_exc()
-        await ctx.send(output.getvalue())
+        except SyntaxError as err:
+            error_class = err.__class__.__name__
+            detail = err.args[0]
+            line_number = err.lineno
+            await ctx.send(f"{error_class} at line {line_number}")
+        except Exception as err:
+            error_class = err.__class__.__name__
+            # detail = err.args[0]
+            # cl, exc, tb = sys.exc_info()
+            # line_number = traceback.extract_tb(tb)[-1][1]
+            await ctx.send(f"{error_class} at line {line_number}")
+        else:
+            await ctx.send(output.getvalue())
+
     else:
         await ctx.send(content)
 
