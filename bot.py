@@ -43,34 +43,32 @@ async def run(ctx):
         await ctx.send("error: invalid language")
         return
 
-    # send to server
-    # r = requests.post(
-    #     LANGUAGE_ENDPOINTS[language], json={"content": content}
-    # )
-
-    # send eval output to discord
-    # await ctx.send(r.text)
     if language.lower() == "python":
-        output = StringIO()
-        
-        sys.stdout = output
-        sys.stderr = output
-        try: 
-            exec(content)
-        except SyntaxError as err:
-            error_class = err.__class__.__name__
-            # detail = err.args[0]
-            line_number = err.lineno
-            await ctx.send(f"{error_class} at line {line_number}")
-        except Exception as err:
-            error_class = err.__class__.__name__
-            cl, exc, tb = sys.exc_info()
-            line_number = traceback.extract_tb(tb)[-1][1]
-            await ctx.send(f"{error_class} at line {line_number}")
-        else:
-            await ctx.send(output.getvalue())
+        await ctx.send(runPython(content))
     else:
         await ctx.send(content)
+
+def runPython(content):
+    output = StringIO()
+    
+    sys.stdout = output
+    sys.stderr = output
+
+    try: 
+        exec(content)
+    except SyntaxError as err:
+        error_class = err.__class__.__name__
+        # detail = err.args[0]
+        line_number = err.lineno
+        return f"{error_class} at line {line_number}"
+    except Exception as err:
+        error_class = err.__class__.__name__
+        cl, exc, tb = sys.exc_info()
+        line_number = traceback.extract_tb(tb)[-1][1]
+        return f"{error_class} at line {line_number}"
+    else:
+        return output.getvalue()
+
 
 
 if __name__ == "__main__":
