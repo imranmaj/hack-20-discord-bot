@@ -51,8 +51,10 @@ async def run(ctx):
         
         sys.stdout = output
         sys.stderr = output
-        
-        exec(content)
+        try: 
+            exec(content)
+        except Exception as e:
+            print traceback.format_exc()
         await ctx.send(output.getvalue())
     else:
         await ctx.send(content)
