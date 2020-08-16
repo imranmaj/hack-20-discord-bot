@@ -1,9 +1,13 @@
 import os
+import traceback
+import sys
+from io import StringIO
 
 from discord.ext import commands
 import requests
 from io import StringIO
 import sys, traceback
+
 
 TOKEN = os.getenv("DISCORD_TOKEN")
 PREFIX = "!"
@@ -66,7 +70,6 @@ async def run(ctx):
             await ctx.send(f"{error_class} at line {line_number}")
         else:
             await ctx.send(output.getvalue())
-
     else:
         await ctx.send(content)
 
