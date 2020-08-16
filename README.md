@@ -1,33 +1,33 @@
-##  Introduction
-Hack 20 Bot is a discord bot that takes code and a specified language as input and outputs the result. Format your command in the form:
 
 
+#  Hack 20 Bot
 
-------------------------------------------
-!run
-\`\`\`{language (case insensitive)}
-//CODE
-\`\`\`
-------------------------------------------
+Hack 20 Bot is a Discord bot that takes code and a specified language as input and outputs the result. Format your command in the form:
+
+    !run
+    ```<language (case insensitive)>
+    <code here>
+    ```
+
 Supported languages:
-Java
+* Java
 
-## Requirements
+# Requirements
 All dependencies are listed within `requirements.txt`. Install them with
 
 ```
 pip install -r requirements.txt
 ```
 
-## Instructions
-### Local
+# Instructions
+### Deploying Locally
 To start the bot locally, install the required dependencies and run the following:
 
 ```
 python bot.py
 ```
 
-### Google Cloud
+### Deploying to Google Cloud
 To deploy the bot on Google Cloud:
 
 * [Download the Google Cloud SDK](https://cloud.google.com/sdk/docs)
