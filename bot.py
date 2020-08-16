@@ -13,7 +13,9 @@ from timer import Timer
 TOKEN = os.getenv("DISCORD_TOKEN")
 PREFIX = "!"
 COMMAND_NAME = "run"
-COMMAND_HELP = "type code in the format \`\`\`{language} // code\`\`\`"
+COMMAND_HELP = """runs code
+                    format message: ``\u200B`\u200B{language} code\u200B`\u200B``
+                    current languages: python, java"""
 BOUNDS = "```"
 LANGUAGE_ENDPOINTS = {
     "python": "",
@@ -57,11 +59,13 @@ async def run(content, function, ctx):
     with t:
         result = function(content)
     duration = t.duration
-    result += '\nExecution Time: ' + str(duration) + ' secs\n'
+    result += '\nExecution Time: ' + str(duration) + ' sec\n'
     author = ctx.author.mention
     ends = [0]
     while ends[-1] < len(result):
-        ends.append(result.rindex('\n', 0, ends[-1] + 1900) + 1)
+        end = result.rfind('\n', ends[-1], ends[-1] + 1900) + 1
+        if end == 0: end = ends[-1] + 1900
+        ends.append(end)
     
     num_messages = len(ends) - 1
     for i in range(num_messages):
