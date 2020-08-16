@@ -65,7 +65,7 @@ async def run(content, function, ctx):
     
     num_messages = len(ends) - 1
     for i in range(num_messages):
-        await ctx.send(f'{author} ({i + 1}/{num_messages}):\n' + result[ends[i]:ends[i + 1]])
+        await ctx.send(f'{author} ({i + 1}/{num_messages}):\n```\n{result[ends[i]:ends[i + 1]]}```')
     
 if __name__ == "__main__":
     bot.run(TOKEN)
