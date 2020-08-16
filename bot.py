@@ -4,12 +4,10 @@ import sys
 from io import StringIO
 
 from discord.ext import commands
-import requests
-from io import StringIO
-import sys, traceback
 
 
 from timeout import timeout
+from run_python import run_python
 
 TOKEN = os.getenv("DISCORD_TOKEN")
 PREFIX = "!"
@@ -46,31 +44,9 @@ async def run(ctx):
         return
 
     if language.lower() == "python":
-        await ctx.send(runPython(content))
+        await ctx.send(run_python(content))
     else:
         await ctx.send(content)
-
-@timeout(15)
-def runPython(content):
-    output = StringIO()
-    
-    sys.stdout = output
-    sys.stderr = output
-
-    try: 
-        exec(content)
-    except SyntaxError as err:
-        error_class = err.__class__.__name__
-        # detail = err.args[0]
-        line_number = err.lineno
-        return f"{error_class} at line {line_number}"
-    except Exception as err:
-        error_class = err.__class__.__name__
-        cl, exc, tb = sys.exc_info()
-        line_number = traceback.extract_tb(tb)[-1][1]
-        return f"{error_class} at line {line_number}"
-    else:
-        return output.getvalue()
 
 if __name__ == "__main__":
     bot.run(TOKEN)
