@@ -1,33 +1,37 @@
 import os, traceback, sys
 import subprocess
+from timer import Timer
 
-from timeout import timeout
+from timeout import timeout, TimeoutError
 from io import StringIO
 
 @timeout(15)
 def run_java(content):
-    output = open("JavaRunner.java", "w+")
-
-    #Create our file
-    createHeader(output)
-    output.write(content)
-    endFile(output)
-
-    output.close()
+    with open("JavaRunner.java", "w+") as output:
+        #Create our file
+        createHeader(output)
+        output.write(content)
+        endFile(output)
 
     try:
         return runCode()
-    except Exception as err:
+    except TimeoutError as err:
         return "Time Limit Exceeded"
 
 
 def runCode():
     #Run the file
-    result = subprocess.Popen(['java', 'JavaRunner.java'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    t = Timer()
+    with t:
+        result = subprocess.Popen(['java', 'JavaRunner.java'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        result.wait()
+    duration = t.duration
+
 
     stdout,stderr = result.communicate()
     if(stderr == None):
-        return stdout.decode("utf-8")
+        std_out = stdout.decode("utf-8")
+        return f"{std_out}Execution Time: {duration}s"
     else:
         return stderr.decode("utf-8")
 
@@ -36,5 +40,6 @@ def createHeader(output):
 
 
 def endFile(output):
-    output.write("}");
+    output.write("}")
+
 

@@ -1,5 +1,2 @@
-public class JavaRunner{public static void main(String[] args){
-  while(true){
-  }
-}
+public class JavaRunner{public static void main(String[] args){System.out.println("Hello");}
 }

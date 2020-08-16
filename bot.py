@@ -55,11 +55,7 @@ async def run(ctx):
         await ctx.send(language)
 
 async def run(content, function, ctx):
-    t = Timer()
-    with t:
-        result = function(content)
-    duration = t.duration
-    result += '\nExecution Time: ' + str(duration) + ' sec\n'
+    result = function(content)
     author = ctx.author.mention
     ends = [0]
     while ends[-1] < len(result):
