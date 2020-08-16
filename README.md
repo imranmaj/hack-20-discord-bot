@@ -11,6 +11,7 @@ Hack 20 Bot is a Discord bot that takes code and a specified language as input a
 
 Supported languages:
 * Java
+* Python
 
 # Requirements
 All dependencies are listed within `requirements.txt`. Install them with
