@@ -1,16 +1,40 @@
 import os, traceback, sys
+import subprocess
 
 from timeout import timeout
 from io import StringIO
 
-@timeout(15)
-def run_python(content):
-    file = open("JavaSkeleton.java","r")
+def run_java(content):
+    output = open("JavaRunner.java", "w+")
 
-    for x in range(0,3):
-        file.readlines()
-    file = open("JavaSkeleton.java", "a")
-    file.write(content)
-    # run the java somehow?!?!?
+    #Create our file
+    createHeader(output)
+    output.write(content)
+    endFile(output)
 
-    return file.read()
+    output.close()
+
+    return runCode()
+
+
+def runCode():
+    output = StringIO()
+
+    sys.stdout = output
+    sys.stderr = output
+
+    #Run the file
+    result = subprocess.run(['java JavaRunner.java'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+    # if(result.stdout.decode('utf-8') != ""):
+    return result.stdout.decode('utf-8')
+    # else:
+        # return result.stderr
+
+def createHeader(output):
+    output.write("public class JavaRunner{")
+
+
+def endFile(output):
+    output.write("}");
+
